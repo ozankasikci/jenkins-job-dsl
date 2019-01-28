@@ -6,15 +6,21 @@
   <properties/>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.62">
     <script>node {
-      def seed
+      def seedJob
       stage ('Checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: 'master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '', url: 'https://git:git@github.com/ozankasikci/jenkins-job-dsl']]])
+        checkout([
+          $class: 'GitSCM',
+          branches: [[name: 'master']],
+          doGenerateSubmoduleConfigurations: false,
+          extensions: [],
+          submoduleCfg: [],
+          userRemoteConfigs: [[credentialsId: '', url: 'https://git:git@github.com/ozankasikci/jenkins-job-dsl']]
+        ])
       }
       stage ('Generate') {
         jobDsl targets: 'generate_job.groovy'
       }
-
-      }</script>
+    }</script>
     <sandbox>true</sandbox>
   </definition>
   <triggers/>
